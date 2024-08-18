@@ -9,3 +9,4 @@ PyPDF2
 chromadb
 faiss-cpu
 langchain_google_genai
+pydantic == 1.10.12
