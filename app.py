@@ -223,6 +223,7 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 from pydantic import BaseModel, field_validator, ValidationError
 
+# Load environment variables
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
@@ -230,11 +231,12 @@ if not api_key:
 else:
     genai.configure(api_key=api_key)
 
-# Define a Pydantic model to validate some configuration
+# Define a Pydantic model to validate application configuration
 class AppConfig(BaseModel):
     chunk_size: int
     chunk_overlap: int
 
+    # Use @field_validator to validate fields after they are set
     @field_validator(mode="after")
     def validate_chunk_size(cls, values):
         if values['chunk_size'] <= 0 or values['chunk_overlap'] < 0:
@@ -270,10 +272,14 @@ def get_vector_store(text_chunks):
 
 def get_conversational_chain():
     prompt_template = """
-    Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-    provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
-    Context:\n {context}?\n
-    Question: \n{question}\n
+    Answer the question as detailed as possible from the provided context. If the answer is not in the context, 
+    say, "Answer is not available in the context." Do not provide the wrong answer.
+
+    Context:
+    {context}
+
+    Question: 
+    {question}
 
     Answer:
     """
@@ -328,3 +334,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
