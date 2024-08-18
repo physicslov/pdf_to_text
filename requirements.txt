@@ -1,0 +1,12 @@
+ipykernel
+numpy
+pandas
+streamlit
+google-generativeai
+python-dotenv
+langchain
+PyPDF2
+chromadb
+faiss-cpu
+langchain_google_genai
+pydantic == 1.10.12
